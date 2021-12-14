@@ -1,7 +1,8 @@
 import { Box, Button, Typography } from "@mui/material";
 import React from "react";
+import Link from "next/link";
 
-export default function AppHeader({ sx, hideCreateEvent = false }) {
+export default function AppHeader({ sx, homePage = false }) {
   return (
     <Box
       sx={[
@@ -16,20 +17,22 @@ export default function AppHeader({ sx, hideCreateEvent = false }) {
         },
       ]}
     >
-      <a href="/">
+      <Link href="/">
         <Typography variant="h6" className="header-title">
           Keep the kids busy!
         </Typography>
-        <Typography
-          sx={{ color: "#e0e0e0" }}
-          variant="caption"
-          className="header-title"
-        >
-          Upcoming Events
-        </Typography>
-      </a>
-      {!hideCreateEvent && (
-        <a href="/events/create">
+        {homePage && (
+          <Typography
+            sx={{ color: "#e0e0e0" }}
+            variant="caption"
+            className="header-title"
+          >
+            Upcoming Events
+          </Typography>
+        )}
+      </Link>
+      {homePage && (
+        <Link href="/events/create">
           <Button
             sx={{
               color: "#fff",
@@ -40,7 +43,7 @@ export default function AppHeader({ sx, hideCreateEvent = false }) {
           >
             Create an event
           </Button>
-        </a>
+        </Link>
       )}
     </Box>
   );

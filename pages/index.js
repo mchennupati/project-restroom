@@ -11,7 +11,7 @@ export default function index() {
         <title>Events around you</title>
       </Head>
       <div>
-        <AppHeader />
+        <AppHeader homePage />
         <Grid container justifyContent={"center"}>
           {Array(5)
             .fill()

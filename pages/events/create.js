@@ -10,11 +10,8 @@ export default function create() {
       <Head>
         <title>Create an event</title>
       </Head>
-      <AppHeader hideCreateEvent />
+      <AppHeader />
       <Container sx={{ mt: 4 }}>
-        <Typography sx={{ mb: 2 }} variant="h4">
-          Create an event
-        </Typography>
         <CreateEvent />
       </Container>
     </div>

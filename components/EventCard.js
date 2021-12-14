@@ -3,6 +3,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { Button, Typography } from "@mui/material";
+import Link from "next/link";
 
 export default function EventCard() {
   const matches = useMediaQuery("(min-width:992px)");
@@ -98,7 +99,7 @@ export default function EventCard() {
                 </div>
               </Grid>
               <Grid item xs={6} md={4}>
-                <a href="/events/1">
+                <Link href="/events/1">
                   <Button
                     fullWidth
                     disableElevation
@@ -114,7 +115,7 @@ export default function EventCard() {
                   >
                     Read More
                   </Button>
-                </a>
+                </Link>
               </Grid>
             </Grid>
           </Grid>

@@ -20,7 +20,7 @@ export default function EventDetails() {
       <Head>
         <title>Event Details</title>
       </Head>
-      <AppHeader hideCreateEvent />
+      <AppHeader />
       <Container maxWidth={matches && "xl"} sx={{ my: 3 }}>
         <Typography sx={{ mb: 2 }} variant="h4">
           Football Match
