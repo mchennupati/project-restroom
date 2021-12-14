@@ -17,20 +17,19 @@ export default function AppHeader({ sx, homePage = false }) {
         },
       ]}
     >
-      <Link href="/">
-        <Typography variant="h6" className="header-title">
-          Keep the kids busy!
+      <Typography variant="h6" className="header-title">
+        Keep the kids busy!
+      </Typography>
+      {homePage && (
+        <Typography
+          sx={{ color: "#e0e0e0" }}
+          variant="caption"
+          className="header-title"
+        >
+          Upcoming Events
         </Typography>
-        {homePage && (
-          <Typography
-            sx={{ color: "#e0e0e0" }}
-            variant="caption"
-            className="header-title"
-          >
-            Upcoming Events
-          </Typography>
-        )}
-      </Link>
+      )}
+
       {homePage && (
         <Link href="/events/create">
           <Button
