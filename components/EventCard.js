@@ -98,21 +98,23 @@ export default function EventCard() {
                 </div>
               </Grid>
               <Grid item xs={6} md={4}>
-                <Button
-                  fullWidth
-                  disableElevation
-                  sx={{
-                    background: "#3865a8",
-                    color: "#fff",
-                    fontSize: 12,
-                    fontFamily: '"Rubik", sans-serif',
-                    borderRadius: 0,
-                    fontWeight: "400",
-                    height: 35,
-                  }}
-                >
-                  Read More
-                </Button>
+                <a href="/events/1">
+                  <Button
+                    fullWidth
+                    disableElevation
+                    sx={{
+                      background: "#3865a8",
+                      color: "#fff",
+                      fontSize: 12,
+                      fontFamily: '"Rubik", sans-serif',
+                      borderRadius: 0,
+                      fontWeight: "400",
+                      height: 35,
+                    }}
+                  >
+                    Read More
+                  </Button>
+                </a>
               </Grid>
             </Grid>
           </Grid>
