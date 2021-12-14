@@ -71,7 +71,7 @@ export default function EventCard() {
                       fontSize: 12,
                     }}
                   >
-                    26th September 2016 at 6:00 am
+                    07th January 2022 at 6:00 am
                   </Typography>
                 </div>
               </Grid>
