@@ -45,9 +45,9 @@ export default function EventDetails() {
                   src="https://tally.so/embed/31pVgm?alignLeft=1&hideTitle=1&transparentBackground=1"
                   width="100%"
                   height="250"
-                  frameborder="0"
-                  marginheight="0"
-                  marginwidth="0"
+                  frameBorder="0"
+                  marginHeight="0"
+                  marginWidth="0"
                   title="Join an Event"
                 ></iframe>
               </Container>
@@ -92,9 +92,9 @@ export default function EventDetails() {
               src="https://tally.so/embed/31pVgm?alignLeft=1&hideTitle=1&transparentBackground=1"
               width="100%"
               height="250"
-              frameborder="0"
-              marginheight="0"
-              marginwidth="0"
+              frameBorder="0"
+              marginHeight="0"
+              marginWidth="0"
               title="Join an Event"
             ></iframe>
           </div>
