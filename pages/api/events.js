@@ -17,41 +17,72 @@ export default async function handler(req, res) {
       break;
     case "POST":
       try {
-        console.log(req.body.data);
         const adminName = req.body.data.fields.find(
-          (i) => i.label === "Your Name"
-        ).value;
+          (i) => i.label === "What is your name ?"
+        )?.value;
+
         const adminEmail = req.body.data.fields.find(
-          (i) => i.label === "Your Email"
-        ).value;
-        const title = req.body.data.fields.find(
-          (i) => i.label === "Event Title"
-        ).value;
-        const description = req.body.data.fields.find(
-          (i) => i.label === "Event Description"
-        ).value;
+          (i) => i.label === "What is your email address ?"
+        )?.value;
+
+        const eventTitle = req.body.data.fields.find(
+          (i) =>
+            i.label ===
+            "Give us a short title for what you would like to do..  e.g Read a Story."
+        )?.value;
+
+        const userDescription = req.body.data.fields.find(
+          (i) => i.label === "Tell us about yourself"
+        )?.value;
+
+        const eventMode = req.body.data.fields.find(
+          (i) => i.label === "Where would you like to do it ?"
+        )?.value;
+
         const location = req.body.data.fields.find(
           (i) => i.label === "Location"
-        ).value;
+        )?.value;
+
+        const onlineLink = req.body.data.fields.find(
+          (i) => i.label === "Zoom or Meet Link"
+        )?.value;
+
         const eventDate = req.body.data.fields.find(
-          (i) => i.label === "Select Date"
-        ).value;
+          (i) => i.label === "When would you like to do it ?"
+        )?.value;
+
         const eventTime = req.body.data.fields.find(
-          (i) => i.label === "Choose Time"
-        ).value;
+          (i) => i.label === "What time works for you ?"
+        )?.value;
+
+        const eventDescription = req.body.data.fields.find(
+          (i) => i.label === "Tell us about your activity"
+        )?.value;
+
+        const similarLink = req.body.data.fields.find(
+          (i) => i.label === "Share a link if you have done this before..."
+        )?.value;
+
+        const duration = req.body.data.fields.find(
+          (i) => i.label === "How long would you like to do it  for ?"
+        )?.value;
 
         const newEevent = await Event.create({
-          title,
           tallyEventId: req.body.eventId,
           tallySubmissionId: req.body.data.submissionId,
           tallyRespondentId: req.body.data.respondentId,
-          description,
+          eventTitle,
+          eventDescription,
+          userDescription,
           imageUrl: null,
           adminName,
           adminEmail,
-          // eventMode: String,
+          eventMode,
           eventDateTime: eventDate + eventTime,
           eventLocation: location,
+          similarLink,
+          duration,
+          onlineLink,
         });
         res.status(201).json({ success: true, data: newEevent });
       } catch (error) {

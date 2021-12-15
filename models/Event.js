@@ -2,11 +2,12 @@ import mongoose from "mongoose";
 
 const EventSchema = new mongoose.Schema(
   {
-    title: String,
+    eventTitle: String,
+    eventDescription: String,
     tallyEventId: String,
     tallySubmissionId: String,
     tallyRespondentId: String,
-    description: String,
+    userDescription: String,
     imageUrl: String,
     adminName: String,
     adminEmail: { type: String, index: true },
@@ -14,6 +15,9 @@ const EventSchema = new mongoose.Schema(
     eventMode: String,
     eventDateTime: String,
     eventLocation: String,
+    similarLink: String,
+    duration: String,
+    onlineLink: String,
   },
   {
     timestamps: true,
