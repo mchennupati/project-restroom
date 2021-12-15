@@ -17,19 +17,22 @@ export default function AppHeader({ sx, homePage = false }) {
         },
       ]}
     >
-      <Typography variant="h6" className="header-title">
-        Keep the kids busy!
-      </Typography>
-      {homePage && (
-        <Typography
-          sx={{ color: "#e0e0e0" }}
-          variant="caption"
-          className="header-title"
-        >
-          Upcoming Events
-        </Typography>
-      )}
-
+      <Link href="/">
+        <div style={{ cursor: "pointer" }}>
+          <Typography variant="h6" className="header-title">
+            Keep the kids busy!
+          </Typography>
+          {homePage && (
+            <Typography
+              sx={{ color: "#e0e0e0" }}
+              variant="caption"
+              className="header-title"
+            >
+              Upcoming Events
+            </Typography>
+          )}
+        </div>
+      </Link>
       {homePage && (
         <Link href="/events/create">
           <Button
