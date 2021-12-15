@@ -4,8 +4,9 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import { Button, Typography } from "@mui/material";
 import Link from "next/link";
+import dayjs from "dayjs";
 
-export default function EventCard() {
+export default function EventCard({ data }) {
   const matches = useMediaQuery("(min-width:992px)");
   return (
     <Grid sx={{ my: 1 }} item xs={12} md={11}>
@@ -41,20 +42,20 @@ export default function EventCard() {
               sx={{ fontWeight: "400" }}
               variant="h6"
             >
-              Football Match
+              {data.eventTitle ? data.eventTitle : ""}
             </Typography>
             <Typography
               sx={{ fontWeight: "400", fontSize: 14, mb: 2 }}
               variant="body2"
               align={!matches ? "center" : "justify"}
             >
-              Velit veniam non commodo et est. Magna enim officia do pariatur
-              est dolore eu dolore adipisicing proident magna. Culpa ut veniam
-              ipsum pariatur elit aliquip labore occaecat in enim. Qui irure ad
-              dolor id magna. Labore non ut aute labore reprehenderit sit ad
-              irure magna do. Nostrud voluptate qui consequat consequat.
+              {data.eventDescription ? data.eventDescription : ""}
             </Typography>
-            <Grid container justifyContent={"center"} spacing={3}>
+            <Grid
+              container
+              justifyContent={data.eventMode !== "Online" && "center"}
+              spacing={3}
+            >
               <Grid item xs={6} md={4}>
                 <div
                   style={{
@@ -72,32 +73,36 @@ export default function EventCard() {
                       fontSize: 12,
                     }}
                   >
-                    07th January 2022 at 6:00 am
+                    {dayjs(data.eventDateTime).format("DD MMMM YYYY ") +
+                      "at " +
+                      dayjs(data.eventDateTime).format("h:mm A")}
                   </Typography>
                 </div>
               </Grid>
-              <Grid item xs={6} md={4}>
-                <div
-                  style={{
-                    border: "1px solid #e0e0e0",
-                    display: "flex",
-                    justifyContent: "center",
-                    alignItems: "center",
-                    padding: "0px 10px",
-                    height: 35,
-                    width: "100%",
-                  }}
-                >
-                  <Typography
-                    variant="caption"
-                    sx={{
-                      fontSize: 12,
+              {data.eventMode !== "Online" && (
+                <Grid item xs={6} md={4}>
+                  <div
+                    style={{
+                      border: "1px solid #e0e0e0",
+                      display: "flex",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      padding: "0px 10px",
+                      height: 35,
+                      width: "100%",
                     }}
                   >
-                    Barclays Centre, Brooklyn
-                  </Typography>
-                </div>
-              </Grid>
+                    <Typography
+                      variant="caption"
+                      sx={{
+                        fontSize: 12,
+                      }}
+                    >
+                      {data.eventLocation ? data.eventLocation : ""}
+                    </Typography>
+                  </div>
+                </Grid>
+              )}
               <Grid item xs={6} md={4}>
                 <Link href="/events/1">
                   <Button

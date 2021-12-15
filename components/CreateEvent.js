@@ -6,7 +6,7 @@ export default function CreateEvent() {
       <iframe
         src="https://tally.so/embed/31Nxgw?alignLeft=1&hideTitle=1&transparentBackground=1"
         width="100%"
-        height="600"
+        height="1375"
         frameBorder="0"
         marginHeight="0"
         marginWidth="0"
