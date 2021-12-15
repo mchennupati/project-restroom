@@ -35,9 +35,13 @@ export default async function handler(req, res) {
           (i) => i.label === "Tell us about yourself"
         )?.value;
 
-        const eventMode = req.body.data.fields.find(
+        const eventModeValue = req.body.data.fields.find(
           (i) => i.label === "Where would you like to do it ?"
-        )?.value;
+        );
+
+        const eventMode = eventModeValue.options.find(
+          (i) => i.id === eventModeValue.value
+        )?.text;
 
         const location = req.body.data.fields.find(
           (i) => i.label === "Location"
