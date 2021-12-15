@@ -19,13 +19,13 @@ export default async function handler(req, res) {
       try {
         const adminName = req.body.data.fields.find(
           (i) => i.label === "Your Name"
-        );
+        ).value;
         const adminEmail = req.body.data.fields.find(
           (i) => i.label === "Your Email"
-        );
+        ).value;
         const title = req.body.data.fields.find(
           (i) => i.label === "Event Title"
-        );
+        ).value;
         console.log("adminName", adminName);
         console.log("adminEmail", adminEmail);
         console.log("title", title);
