@@ -1,5 +1,5 @@
-import dbConnect from "../../lib/dbConnect";
-import Event from "../../models/Event";
+import dbConnect from "../../../lib/dbConnect";
+import Event from "../../../models/Event";
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -9,7 +9,10 @@ export default async function handler(req, res) {
   switch (method) {
     case "GET":
       try {
-        const events = await Event.find({});
+        const events = await Event.find(
+          null,
+          "eventTitle eventDescription userDescription imageUrl adminName adminEmail eventMode eventDateTime eventLocation similarLink duration onlineLink"
+        );
         res.status(200).json({ success: true, data: events });
       } catch (error) {
         res.status(400).json({ success: false });
@@ -82,7 +85,7 @@ export default async function handler(req, res) {
           adminName,
           adminEmail,
           eventMode,
-          eventDateTime: eventDate + eventTime,
+          eventDateTime: eventDate + " " + eventTime,
           eventLocation: location,
           similarLink,
           duration,

@@ -4,6 +4,7 @@ import AppHeader from "../components/AppHeader";
 import EventCard from "../components/EventCard";
 import { Grid } from "@mui/material";
 import axios from "axios";
+import { url } from "../config";
 
 export default function index({ data }) {
   return (
@@ -25,9 +26,7 @@ export default function index({ data }) {
 
 export async function getServerSideProps() {
   // Fetch data from external API
-  const res = await axios.get(
-    `https://keep-the-kids-busy.vercel.app/api/events`
-  );
+  const res = await axios.get(`${url}/api/events`);
 
   if (!res.data) {
     return {

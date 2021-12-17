@@ -104,7 +104,7 @@ export default function EventCard({ data }) {
                 </Grid>
               )}
               <Grid item xs={6} md={4}>
-                <Link href="/events/1">
+                <Link href={`/events/${data._id}`} passHref>
                   <Button
                     fullWidth
                     disableElevation

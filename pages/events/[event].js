@@ -12,8 +12,12 @@ import React from "react";
 import AppHeader from "../../components/AppHeader";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import { Add } from "@mui/icons-material";
+import { url } from "../../config";
+import axios from "axios";
 
-export default function EventDetails() {
+export default function EventDetails({ data }) {
+  const { event } = data;
+  // console.log(event);
   const matches = useMediaQuery("(min-width:992px)");
   return (
     <div>
@@ -23,10 +27,10 @@ export default function EventDetails() {
       <AppHeader />
       <Container maxWidth={matches && "xl"} sx={{ my: 3 }}>
         <Typography sx={{ mb: 2 }} variant="h4">
-          Football Match
+          {event.eventTitle}
         </Typography>
         <Typography sx={{ mt: 2, fontWeight: "400" }} variant="h6">
-          07th January 2022 at 6:00 am - 7:30 am
+          {event.eventDateTime}
         </Typography>
         <Grid container>
           <Grid item xs={12} md={6}>
@@ -59,17 +63,7 @@ export default function EventDetails() {
           sx={{ mt: 2, fontWeight: "400", fontSize: 16 }}
           variant="body2"
         >
-          Incididunt esse sunt commodo aliqua aute ullamco exercitation ullamco.
-          Dolore deserunt ad reprehenderit sit velit consequat pariatur.
-          Incididunt consequat sit eiusmod elit. Do anim commodo reprehenderit
-          reprehenderit esse eiusmod non. Do ut veniam dolore voluptate dolor
-          nostrud deserunt consequat. Nisi in dolor magna labore dolore laboris
-          sit elit laboris. Minim mollit est nulla labore dolor tempor sint ut.
-          Dolor irure ut exercitation ex incididunt ullamco pariatur pariatur
-          officia pariatur adipisicing enim. Pariatur culpa nostrud dolore magna
-          duis veniam mollit do. Mollit qui eu proident ad et pariatur ea labore
-          minim laborum eu voluptate voluptate. Qui do cillum est ex veniam qui
-          laboris eiusmod.
+          {event.eventDescription}
         </Typography>
         <Button
           variant="text"
@@ -187,4 +181,18 @@ export default function EventDetails() {
       </Container>
     </div>
   );
+}
+
+export async function getServerSideProps({ params }) {
+  // Fetch data from external API
+  const res = await axios.get(`${url}/api/events/${params.event}`);
+
+  if (!res.data) {
+    return {
+      notFound: true,
+    };
+  }
+
+  // Pass data to the page via props
+  return { props: { data: res.data } };
 }
