@@ -21,58 +21,64 @@ export default async function handler(req, res) {
     case "POST":
       try {
         const adminName = req.body.data.fields.find(
-          (i) => i.label === "What is your name ?"
+          (i) => i.key === "question_wQMXy8"
         )?.value;
 
         const adminEmail = req.body.data.fields.find(
-          (i) => i.label === "What is your email address ?"
+          (i) => i.key === "question_mYRgy5"
         )?.value;
 
         const eventTitle = req.body.data.fields.find(
-          (i) =>
-            i.label ===
-            "Give us a short title for what you would like to do..  e.g Read a Story."
+          (i) => i.key === "question_nPDNXd"
         )?.value;
 
         const userDescription = req.body.data.fields.find(
-          (i) => i.label === "Tell us about yourself"
+          (i) => i.key === "question_w54QQ6"
         )?.value;
 
         const eventModeValue = req.body.data.fields.find(
-          (i) => i.label === "Where would you like to do it ?"
+          (i) => i.key === "question_wLzjYO"
         );
 
         const eventMode = eventModeValue.options.find(
-          (i) => i.id === eventModeValue.value
+          (i) => i.id === eventModeValue?.value
         )?.text;
 
         const location = req.body.data.fields.find(
-          (i) => i.label === "Location"
+          (i) => i.key === "question_31kYvO"
         )?.value;
 
         const onlineLink = req.body.data.fields.find(
-          (i) => i.label === "Zoom or Meet Link"
+          (i) => i.key === "question_wzNAJ8"
         )?.value;
 
         const eventDate = req.body.data.fields.find(
-          (i) => i.label === "When would you like to do it ?"
+          (i) => i.key === "question_mDKYyq"
         )?.value;
 
         const eventTime = req.body.data.fields.find(
-          (i) => i.label === "What time works for you ?"
+          (i) => i.key === "question_3lq5ZB"
         )?.value;
 
         const eventDescription = req.body.data.fields.find(
-          (i) => i.label === "Tell us about your activity"
+          (i) => i.key === "question_wdNpVq"
         )?.value;
 
         const similarLink = req.body.data.fields.find(
-          (i) => i.label === "Share a link if you have done this before..."
+          (i) => i.key === "question_3Xr7Yd"
         )?.value;
 
-        const duration = req.body.data.fields.find(
-          (i) => i.label === "How long would you like to do it  for ?"
-        )?.value;
+        const durationValue = req.body.data.fields.find(
+          (i) => i.key === "question_mRdgld"
+        );
+
+        const duration = durationValue.options.find(
+          (i) => i.id === durationValue?.value
+        )?.text;
+
+        const imageUrl = req.body.data.fields.find(
+          (i) => i.key === "question_wvr6vg"
+        )?.value?.url;
 
         const newEevent = await Event.create({
           tallyEventId: req.body.eventId,
@@ -81,7 +87,7 @@ export default async function handler(req, res) {
           eventTitle,
           eventDescription,
           userDescription,
-          imageUrl: null,
+          imageUrl,
           adminName,
           adminEmail,
           eventMode,
