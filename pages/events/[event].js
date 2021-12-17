@@ -134,7 +134,11 @@ export default function EventDetails({ data }) {
               {event.eventMode === "Online" ? "Link" : "Venue"}
             </Typography>
             {event.eventMode === "Online" ? (
-              <a href={findOnlineLink(event.onlineLink)} target="_blank">
+              <a
+                href={findOnlineLink(event.onlineLink)}
+                rel="noreferrer"
+                target="_blank"
+              >
                 {event.onlineLink}
               </a>
             ) : (
