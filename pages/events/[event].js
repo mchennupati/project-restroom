@@ -14,7 +14,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 
 import { url } from "../../config";
 import axios from "axios";
-import AddToCalendar from "react-add-to-calendar";
+
 import dayjs from "dayjs";
 
 export default function EventDetails({ data }) {
@@ -97,7 +97,7 @@ export default function EventDetails({ data }) {
               disableElevation
               // onClick={handleButton}
             >
-              I'm Interested
+              I&apos;m Interested
             </Button>
           </Grid>
         </Grid>
