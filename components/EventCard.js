@@ -22,8 +22,12 @@ export default function EventCard({ data }) {
             md={3}
           >
             <img
-              src="https://media.istockphoto.com/photos/close-up-of-legs-and-feet-of-football-player-in-blue-socks-and-shoes-picture-id1150952747?k=20&m=1150952747&s=612x612&w=0&h=vreccM0RO2rNp4aLN-mLyBwTfN7sfwvkdkwegzYPrXo="
-              style={{ width: "90%" }}
+              src={
+                data.imageUrl
+                  ? data.imageUrl
+                  : "https://www.cdacentre.com/wp-content/uploads/2017/10/event.jpg"
+              }
+              style={{ width: "90%", height: 200 }}
             />
           </Grid>
           <Grid
