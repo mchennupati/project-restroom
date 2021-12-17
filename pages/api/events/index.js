@@ -78,7 +78,7 @@ export default async function handler(req, res) {
 
         const imageUrl = req.body.data.fields.find(
           (i) => i.key === "question_wvr6vg"
-        )?.value?.url;
+        )?.value[0]?.url;
 
         const newEevent = await Event.create({
           tallyEventId: req.body.eventId,
