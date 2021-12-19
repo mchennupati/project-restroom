@@ -10,6 +10,7 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import Image from "next/image";
 
 export default function index({ data }) {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const matches = useMediaQuery("(min-width:992px)");
   return (
     <div>
