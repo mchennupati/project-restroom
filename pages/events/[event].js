@@ -34,6 +34,8 @@ export default function EventDetails({ data }) {
   //   startTime: "2021-12-20T20:15:00-04:00",
   //   endTime: "2021-12-20T21:45:00-04:00",
   // };
+
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const matches = useMediaQuery("(min-width:992px)");
   return (
     <div>
