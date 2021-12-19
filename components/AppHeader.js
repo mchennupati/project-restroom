@@ -34,7 +34,7 @@ export default function AppHeader({ sx, homePage = false }) {
         </div>
       </Link>
       {homePage && (
-        <Link href="/events/create">
+        <a href="#tally-open=31Nxgw&tally-width=500&tally-emoji-animation=none">
           <Button
             sx={{
               color: "#fff",
@@ -45,7 +45,7 @@ export default function AppHeader({ sx, homePage = false }) {
           >
             Create an event
           </Button>
-        </Link>
+        </a>
       )}
     </Box>
   );

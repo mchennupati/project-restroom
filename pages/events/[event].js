@@ -15,8 +15,6 @@ import useMediaQuery from "@mui/material/useMediaQuery";
 import { url } from "../../config";
 import axios from "axios";
 
-import dayjs from "dayjs";
-
 export default function EventDetails({ data }) {
   const { event } = data;
   // console.log(event);
