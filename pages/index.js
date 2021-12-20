@@ -20,41 +20,56 @@ export default function index({ data }) {
       </Head>
       <div>
         <Container>
-          <Box
-            sx={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <div
+          <Grid container>
+            <Grid
+              item
+              xs={12}
+              md={3}
               style={{
                 display: "hidden",
               }}
             />
-            <Image
-              src={require("../assets/logo.png")}
-              height="200px"
-              width="400px"
-            />
-            <a href="#tally-open=31Nxgw&tally-width=500&tally-emoji-animation=none">
-              <Button
-                variant="contained"
-                sx={{
-                  textTransform: "none",
-                  height: matches ? 40 : 60,
-                  background: "rgb(96,221,208)",
-                  color: "#000",
-                  ":hover": {
-                    background: "#2dd2c2",
-                  },
-                }}
-                disableElevation
-              >
-                Create an event...
-              </Button>
-            </a>
-          </Box>
+            <Grid
+              sx={{ display: "flex", justifyContent: "center" }}
+              item
+              xs={12}
+              md={6}
+            >
+              <Image
+                src={require("../assets/logo.png")}
+                height="200px"
+                width="400px"
+              />
+            </Grid>
+            <Grid
+              sx={{
+                display: "flex",
+                justifyContent: matches ? "flex-end" : "center",
+                alignItems: "center",
+              }}
+              item
+              xs={12}
+              md={3}
+            >
+              <a href="#tally-open=31Nxgw&tally-width=500&tally-emoji-animation=none">
+                <Button
+                  variant="contained"
+                  sx={{
+                    textTransform: "none",
+                    height: 40,
+                    background: "rgb(96,221,208)",
+                    color: "#000",
+                    ":hover": {
+                      background: "#2dd2c2",
+                    },
+                  }}
+                  disableElevation
+                >
+                  Create an event...
+                </Button>
+              </a>
+            </Grid>
+          </Grid>
           <Grid container justifyContent={"center"}>
             {data.data.map((item, index) => (
               <EventCard data={item} key={index} />

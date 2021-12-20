@@ -23,7 +23,7 @@ export default function EventCard({ data }) {
   return (
     <Grid sx={{ my: 1, width: "100%" }} item xs={12}>
       <Grid container alignItems={"center"}>
-        <Grid item xs={12} md={10} sx={{ py: 3 }}>
+        <Grid item xs={12} md={10} order={{ xs: 2, md: 1 }} sx={{ py: 3 }}>
           <a href={`/events/${data._id}`}>
             <Card sx={{ display: "flex", p: 3, width: "100%" }}>
               <CardMedia
@@ -61,6 +61,7 @@ export default function EventCard({ data }) {
           item
           xs={12}
           md={2}
+          order={{ xs: 1, md: 2 }}
           sx={{
             py: 3,
             display: "flex",
@@ -99,7 +100,9 @@ export default function EventCard({ data }) {
             }}
           >
             <Typography variant="subtitle1">
-              {dayjs(data.eventDateTime).format("hh mm A")}
+              {data.duration === "30 min"
+                ? dayjs(data.eventDateTime).add(30, "m").format("hh mm A")
+                : dayjs(data.eventDateTime).add(60, "m").format("hh mm A")}
             </Typography>
           </Box>
         </Grid>
