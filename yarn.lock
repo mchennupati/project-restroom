@@ -80,6 +80,11 @@
     "@babel/helper-validator-identifier" "^7.15.7"
     to-fast-properties "^2.0.0"
 
+"@culturehq/add-to-calendar@^1.1.2":
+  version "1.1.2"
+  resolved "https://registry.yarnpkg.com/@culturehq/add-to-calendar/-/add-to-calendar-1.1.2.tgz#e0fbe95b828478045065a03753907fdb072ae8fc"
+  integrity sha512-x3Z4UuJdWIHwptmExMkgka6HWxbPRv5rKWAEevCMJQXzfWRK6utJp523d3xb7VGeXHnSTL2xleY0kjswMRS5yQ==
+
 "@emotion/babel-plugin@^11.3.0":
   version "11.7.1"
   resolved "https://registry.npmjs.org/@emotion/babel-plugin/-/babel-plugin-11.7.1.tgz"

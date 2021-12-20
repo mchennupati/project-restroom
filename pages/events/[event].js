@@ -11,9 +11,12 @@ import Head from "next/head";
 import React from "react";
 import AppHeader from "../../components/AppHeader";
 import useMediaQuery from "@mui/material/useMediaQuery";
+import AddToCalendar from "@culturehq/add-to-calendar";
+import "@culturehq/add-to-calendar/dist/styles.css";
 
 import { url } from "../../config";
 import axios from "axios";
+import dayjs from "dayjs";
 
 export default function EventDetails({ data }) {
   const { event } = data;
@@ -75,30 +78,21 @@ export default function EventDetails({ data }) {
             >
               {event.eventDescription}
             </Typography>
-            {/* <AddToCalendar
-              event={someEvent}
-              buttonLabel="Put on my calendar"
-              items={[
-                { outlook: "Outlook" },
-                { outlookcom: "Outlook.com" },
-                { apple: "Apple Calendar" },
-                { yahoo: "Yahoo" },
-                { google: "Google" },
-              ]}
-            /> */}
-            <Button
-              sx={{
-                background: "#3965A8",
-                width: "40%",
-                mt: 2,
-                // textTransform: "none",
-              }}
-              variant="contained"
-              disableElevation
-              // onClick={handleButton}
-            >
-              I&apos;m Interested
-            </Button>
+            <div style={{ margin: "20px 0" }}>
+              <AddToCalendar
+                filename={event.eventTitle}
+                event={{
+                  name: event.eventTitle,
+                  details: event.eventDescription,
+                  ...(event.eventMode !== "Online" && {
+                    location: event.eventLocation,
+                  }),
+                  startsAt: dayjs(event.eventDateTime).toISOString(),
+                  // TODO Event Duration
+                  endsAt: dayjs(event.eventDateTime).add(30, "m"),
+                }}
+              />
+            </div>
           </Grid>
         </Grid>
 
