@@ -21,9 +21,9 @@ export default function EventCard({ data }) {
   console.log("Data:", data);
   const matches = useMediaQuery("(min-width:992px)");
   return (
-    <Grid sx={{ my: 1, width: "100%" }} item xs={12}>
+    <Grid sx={{ width: "100%", my: 3 }} item xs={12}>
       <Grid container alignItems={"center"}>
-        <Grid item xs={12} md={10} order={{ xs: 2, md: 1 }} sx={{ py: 3 }}>
+        <Grid item xs={12} md={10} order={{ xs: 2, md: 1 }}>
           <a href={`/events/${data._id}`}>
             <Card sx={{ display: "flex", p: 3, width: "100%" }}>
               <CardMedia
@@ -63,14 +63,14 @@ export default function EventCard({ data }) {
           md={2}
           order={{ xs: 1, md: 2 }}
           sx={{
-            py: 3,
             display: "flex",
-            flexDirection: "column",
+
+            flexDirection: matches && "column",
             alignItems: "center",
             justifyContent: "center",
           }}
         >
-          <Typography variant="subtitle1" sx={{ my: 1 }} component="div">
+          <Typography variant="subtitle1" component="div">
             {dayjs(data.eventDateTime).isToday()
               ? "Today"
               : dayjs(data.eventDateTime).isTomorrow()
@@ -83,26 +83,11 @@ export default function EventCard({ data }) {
               border: "1px solid #000",
               borderRadius: 1,
               padding: "2px 8px",
-              my: 1,
+              ml: !matches && 1,
             }}
           >
             <Typography variant="subtitle1">
               {dayjs(data.eventDateTime).format("hh mm A")}
-            </Typography>
-          </Box>
-          <Box
-            sx={{
-              background: "yellow",
-              border: "1px solid #000",
-              borderRadius: 1,
-              padding: "2px 8px",
-              my: 1,
-            }}
-          >
-            <Typography variant="subtitle1">
-              {data.duration === "30 min"
-                ? dayjs(data.eventDateTime).add(30, "m").format("hh mm A")
-                : dayjs(data.eventDateTime).add(60, "m").format("hh mm A")}
             </Typography>
           </Box>
         </Grid>
