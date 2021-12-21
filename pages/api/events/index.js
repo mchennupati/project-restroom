@@ -76,9 +76,11 @@ export default async function handler(req, res) {
           (i) => i.id === durationValue?.value
         )?.text;
 
-        const imageUrl = req.body.data.fields.find(
+        const image = req.body.data.fields.find(
           (i) => i.key === "question_wvr6vg"
-        )?.value[0]?.url;
+        )?.value;
+
+        const imageUrl = image !== null ? image[0] : null;
 
         const newEevent = await Event.create({
           tallyEventId: req.body.eventId,
@@ -100,7 +102,7 @@ export default async function handler(req, res) {
         res.status(201).json({ success: true, data: newEevent });
       } catch (error) {
         console.log(error);
-        res.status(400).json({ success: false });
+        res.status(400).json({ success: false, error });
       }
       break;
     default:
