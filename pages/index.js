@@ -35,11 +35,20 @@ export default function index({ data }) {
               xs={12}
               md={6}
             >
-              <Image
-                src={require("../assets/logo.png")}
-                height="200px"
-                width="400px"
-              />
+              <div
+                style={{
+                  height: 175,
+                  width: 175,
+                  position: "relative",
+                  margin: "20px 0",
+                }}
+              >
+                <Image
+                  src={require("../assets/logo.png")}
+                  objectFit="contain"
+                  layout="fill"
+                />
+              </div>
             </Grid>
             <Grid
               sx={{

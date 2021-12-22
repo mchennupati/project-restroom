@@ -11,6 +11,8 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import dayjs from "dayjs";
+import Image from "next/image";
+
 var isTomorrow = require("dayjs/plugin/isTomorrow");
 var isToday = require("dayjs/plugin/isToday");
 
@@ -24,38 +26,55 @@ export default function EventCard({ data }) {
     <Grid sx={{ width: "100%", my: 3 }} item xs={12}>
       <Grid container alignItems={"center"}>
         <Grid item xs={12} md={10} order={{ xs: 2, md: 1 }}>
-          <a href={`/events/${data._id}`}>
-            <Card sx={{ display: "flex", p: 3, width: "100%" }}>
-              <CardMedia
-                component="img"
-                sx={{ width: 151, height: "auto" }}
-                image={
-                  data.imageUrl
-                    ? data.imageUrl
-                    : "https://www.cdacentre.com/wp-content/uploads/2017/10/event.jpg"
-                }
-                alt="Live from space album cover"
-              />
-              <Box sx={{ display: "flex", flexDirection: "column" }}>
-                <CardContent sx={{ flex: "1 0 auto" }}>
-                  <Typography component="div" variant="h6">
-                    {`${data.eventTitle} - ${data.duration}`}
-                  </Typography>
-                  <Typography
-                    gutterBottom
-                    variant="subtitle1"
-                    color="text.secondary"
-                    component="div"
-                  >
-                    {"by " + data.adminName}
-                  </Typography>
-                  <Typography variant="body2" component="div">
-                    {data.eventDescription}
-                  </Typography>
-                </CardContent>
+          <Link href={`/events/${data._id}`}>
+            <Card
+              sx={{ display: "flex", p: 3, width: "100%", cursor: "pointer" }}
+            >
+              <div
+                style={{
+                  width: "25%",
+                  position: "relative",
+                  height: 150,
+                }}
+              >
+                <Image
+                  src={
+                    data.imageUrl
+                      ? data.imageUrl
+                      : require("../assets/placeholder.png")
+                  }
+                  alt="Event Picture"
+                  objectFit="cover"
+                  layout="fill"
+                />
+              </div>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "column",
+                  width: "75%",
+                  ml: 3,
+                }}
+              >
+                {/* <CardContent sx={{ flex: "1 0 auto" }}> */}
+                <Typography component="div" variant="h6">
+                  {`${data.eventTitle} - ${data.duration}`}
+                </Typography>
+                <Typography
+                  gutterBottom
+                  variant="subtitle1"
+                  color="text.secondary"
+                  component="div"
+                >
+                  {"by " + data.adminName}
+                </Typography>
+                <Typography variant="body2" component="div">
+                  {data.eventDescription}
+                </Typography>
+                {/* </CardContent> */}
               </Box>
             </Card>
-          </a>
+          </Link>
         </Grid>
         <Grid
           item

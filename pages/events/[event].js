@@ -13,7 +13,7 @@ import AppHeader from "../../components/AppHeader";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import AddToCalendar from "@culturehq/add-to-calendar";
 import "@culturehq/add-to-calendar/dist/styles.css";
-
+import Image from "next/image";
 import { url } from "../../config";
 import axios from "axios";
 import dayjs from "dayjs";
@@ -49,19 +49,25 @@ export default function EventDetails({ data }) {
       <Container maxWidth={matches && "xl"} sx={{ my: 3 }}>
         <Grid container>
           <Grid item xs={12} md={6}>
-            <img
-              src={
-                event.imageUrl
-                  ? event.imageUrl
-                  : "https://www.cdacentre.com/wp-content/uploads/2017/10/event.jpg"
-              }
+            <div
               style={{
-                width: "100%",
-                borderRadius: 10,
-                margin: "20px 0",
+                position: "relative",
                 height: 400,
+                borderRadius: 5,
+                overflow: "hidden",
               }}
-            />
+            >
+              <Image
+                style={{ borderRadius: 10 }}
+                layout="fill"
+                objectFit="cover"
+                src={
+                  event.imageUrl
+                    ? event.imageUrl
+                    : require("../../assets/placeholder.png")
+                }
+              />
+            </div>
           </Grid>
 
           <Grid sx={{ pl: matches && 3, py: 2, pr: 1 }} item xs={12} md={6}>
