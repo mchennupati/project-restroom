@@ -8,8 +8,13 @@ import { url } from "../config";
 import Script from "next/script";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Image from "next/image";
+import EventDetailsModal from "../components/EventDetailsModal";
 
 export default function index({ data }) {
+  const [modalOpen, setModalOpen] = React.useState({
+    open: false,
+    data: null,
+  });
   // eslint-disable-next-line react-hooks/rules-of-hooks
   const matches = useMediaQuery("(min-width:992px)");
   return (
@@ -81,10 +86,14 @@ export default function index({ data }) {
           </Grid>
           <Grid container justifyContent={"center"}>
             {data.data.map((item, index) => (
-              <EventCard data={item} key={index} />
+              <EventCard setModalOpen={setModalOpen} data={item} key={index} />
             ))}
           </Grid>
         </Container>
+        <EventDetailsModal
+          modalState={modalOpen}
+          setModalState={setModalOpen}
+        />
       </div>
     </div>
   );
