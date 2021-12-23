@@ -66,6 +66,7 @@ function EventDetailsModal({ modalState, setModalState }) {
           <Image
             layout="fill"
             objectFit="cover"
+            alt="Event Picture"
             src={
               modalState.data?.imageUrl
                 ? modalState.data?.imageUrl

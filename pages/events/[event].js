@@ -20,7 +20,6 @@ import dayjs from "dayjs";
 
 export default function EventDetails({ data }) {
   const { event } = data;
-  // console.log(event);
 
   const findOnlineLink = (link) => {
     if (link.indexOf("http://") == 0 || link.indexOf("https://") == 0) {
@@ -58,6 +57,7 @@ export default function EventDetails({ data }) {
               }}
             >
               <Image
+                alt="Event Picture"
                 style={{ borderRadius: 10 }}
                 layout="fill"
                 objectFit="cover"

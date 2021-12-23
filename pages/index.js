@@ -50,6 +50,7 @@ export default function index({ data }) {
                 }}
               >
                 <Image
+                  alt="logo"
                   src={require("../assets/logo.png")}
                   objectFit="contain"
                   layout="fill"
@@ -72,6 +73,7 @@ export default function index({ data }) {
                   sx={{
                     textTransform: "none",
                     height: 40,
+
                     background: "rgb(96,221,208)",
                     color: "#000",
                     ":hover": {

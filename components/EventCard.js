@@ -20,7 +20,6 @@ dayjs.extend(isTomorrow);
 dayjs.extend(isToday);
 
 export default function EventCard({ data, setModalOpen }) {
-  console.log("Data:", data);
   const matches = useMediaQuery("(min-width:992px)");
   return (
     <Grid sx={{ width: "100%", my: 3 }} item xs={12}>
@@ -59,7 +58,11 @@ export default function EventCard({ data, setModalOpen }) {
               }}
             >
               {/* <CardContent sx={{ flex: "1 0 auto" }}> */}
-              <Typography component="div" variant="h6">
+              <Typography
+                sx={{ fontWeight: "700" }}
+                component="div"
+                variant="h6"
+              >
                 {`${data.eventTitle} - ${data.duration}`}
               </Typography>
               <Typography
