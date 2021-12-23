@@ -11,6 +11,7 @@ import Image from "next/image";
 import EventDetailsModal from "../components/EventDetailsModal";
 
 export default function index({ data }) {
+  // eslint-disable-next-line react-hooks/rules-of-hooks
   const [modalOpen, setModalOpen] = React.useState({
     open: false,
     data: null,
