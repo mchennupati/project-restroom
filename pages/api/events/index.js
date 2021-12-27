@@ -88,6 +88,13 @@ export default async function handler(req, res) {
 
         const imageUrl = image !== null ? image[0].url : null;
 
+        const eventDateTime = new Date(
+          dayjs(`${eventDate} ${eventTime}`)
+            .tz("Europe/Berlin")
+            .utc()
+            .format("YYYY-MM-DDTHH:MM:ss")
+        );
+
         const newEevent = await Event.create({
           tallyEventId: req.body.eventId,
           tallySubmissionId: req.body.data.submissionId,
@@ -99,10 +106,7 @@ export default async function handler(req, res) {
           adminName,
           adminEmail,
           eventMode,
-          eventDateTime: dayjs(`${eventDate} ${eventTime}`)
-            .tz("Europe/Berlin")
-            .utc()
-            .format("YYYY-MM-DD HH:mm"),
+          eventDateTime,
           eventLocation: location,
           similarLink,
           duration,
