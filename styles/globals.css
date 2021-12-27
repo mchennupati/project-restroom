@@ -30,3 +30,12 @@ a {
   font-family: "Public Sans", sans-serif !important;
   font-weight: 400;
 }
+
+.linkStyles {
+  text-decoration: none;
+  display: block;
+  color: #e42d2d;
+  font-size: 18px;
+  text-align: center;
+  padding: 6px;
+}

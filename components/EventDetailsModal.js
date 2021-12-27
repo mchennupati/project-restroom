@@ -4,19 +4,18 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import {
-  Grid,
-  IconButton,
-  Paper,
-  Typography,
-  useMediaQuery,
-} from "@mui/material";
-
+import { Grid, IconButton, Typography, useMediaQuery } from "@mui/material";
+import { Modal } from "@mui/material";
 import { useTheme } from "@mui/system";
 import { Close, DateRange } from "@mui/icons-material";
 import Image from "next/image";
+import AddToCalendarHOC from "react-add-to-calendar-hoc";
+import dayjs from "dayjs";
 
-import "@culturehq/add-to-calendar/dist/styles.css";
+const AddToCalendarDropdown = AddToCalendarHOC(Button, CustomModal);
+
+var utc = require("dayjs/plugin/utc");
+dayjs.extend(utc);
 
 function EventDetailsModal({ modalState, setModalState }) {
   const theme = useTheme();
@@ -27,6 +26,21 @@ function EventDetailsModal({ modalState, setModalState }) {
     } else {
       return `https://${link}`;
     }
+  };
+
+  const prepareCalendarEvent = () => {
+    const startDatetime = dayjs(modalState.data?.eventDateTime)
+      .utc()
+      .format("YYYYMMDDTHHmmssZ");
+
+    const duration = modalState.data?.duration;
+    return {
+      description: modalState.data?.eventDescription,
+      duration,
+      location: modalState.data?.eventLocation,
+      startDatetime,
+      title: modalState.data?.eventTitle,
+    };
   };
 
   const handleClose = () => {
@@ -150,26 +164,22 @@ function EventDetailsModal({ modalState, setModalState }) {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button sx={{ textTransform: "none", px: 3 }} startIcon={<DateRange />}>
-          Add to Calendar
-        </Button>
-      </DialogActions>
-      {/* <DialogActions sx={{ position: "relative", zIndex: 1000 }}>
-        <AddToCalendar
-          filename={modalState.data?.eventTitle}
-          event={{
-            name: modalState.data?.eventTitle,
-            details: modalState.data?.eventDescription,
-            ...(modalState.data?.eventMode !== "Online" && {
-              location: modalState.data?.eventLocation,
-            }),
-            startsAt: dayjs(modalState.data?.eventDateTime).toISOString(),
-            // TODO Event Duration
-            endsAt: dayjs(modalState.data?.eventDateTime).add(30, "m"),
-          }}
+        <AddToCalendarDropdown
+          event={prepareCalendarEvent()}
+          linkProps={{ className: "linkStyles" }}
+          buttonText="I'm Interested"
         />
-      </DialogActions> */}
+      </DialogActions>
     </Dialog>
+  );
+}
+
+function CustomModal({ children }) {
+  const [isOpen, setOpen] = React.useState(true);
+  return (
+    <Modal open={isOpen} onBackdropClick={() => setOpen(false)}>
+      <div>{children}</div>
+    </Modal>
   );
 }
 

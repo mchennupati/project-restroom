@@ -2,16 +2,16 @@ import * as React from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import {
-  Button,
-  Typography,
-  Card,
-  CardContent,
-  CardMedia,
-} from "@mui/material";
-import Link from "next/link";
-import dayjs from "dayjs";
+import { Button, Typography, Card, Modal } from "@mui/material";
+
 import Image from "next/image";
+import AddToCalendarHOC from "react-add-to-calendar-hoc";
+import dayjs from "dayjs";
+
+const AddToCalendarDropdown = AddToCalendarHOC(Button, CustomModal);
+
+var utc = require("dayjs/plugin/utc");
+dayjs.extend(utc);
 
 var isTomorrow = require("dayjs/plugin/isTomorrow");
 var isToday = require("dayjs/plugin/isToday");
@@ -21,6 +21,20 @@ dayjs.extend(isToday);
 
 export default function EventCard({ data, setModalOpen }) {
   const matches = useMediaQuery("(min-width:992px)");
+  const prepareCalendarEvent = () => {
+    const startDatetime = dayjs(data.eventDateTime)
+      .utc()
+      .format("YYYYMMDDTHHmmssZ");
+
+    const duration = data.duration;
+    return {
+      description: data.eventDescription,
+      duration,
+      location: data.eventLocation,
+      startDatetime,
+      title: data.eventTitle,
+    };
+  };
   return (
     <Grid sx={{ width: "100%", my: 3 }} item xs={12}>
       <Grid container alignItems={"center"}>
@@ -100,21 +114,53 @@ export default function EventCard({ data, setModalOpen }) {
               ? "Tomorrow"
               : dayjs(data.eventDateTime).format("DD MMM YYYY")}
           </Typography>
-          <Box
+          {/* <Button
             sx={{
               background: "yellow",
               border: "1px solid #000",
               borderRadius: 1,
               padding: "2px 8px",
               ml: !matches && 1,
+              ":hover": {
+                background: "yellow",
+              },
             }}
           >
-            <Typography variant="subtitle1">
+            <Typography style={{ color: "#000" }} variant="subtitle1">
               {dayjs(data.eventDateTime).format("hh mm A")}
             </Typography>
-          </Box>
+          </Button> */}
+          <AddToCalendarDropdown
+            buttonProps={{
+              sx: {
+                background: "yellow",
+                border: "1px solid #000",
+                borderRadius: 1,
+                padding: "2px 8px",
+                color: "#000",
+                ml: !matches && 1,
+                ":hover": {
+                  background: "yellow",
+                },
+              },
+            }}
+            event={prepareCalendarEvent()}
+            linkProps={{ className: "linkStyles" }}
+            buttonText={
+              data.eventDateTime && dayjs(data.eventDateTime).format("hh mm A")
+            }
+          />
         </Grid>
       </Grid>
     </Grid>
+  );
+}
+
+function CustomModal({ children }) {
+  const [isOpen, setOpen] = React.useState(true);
+  return (
+    <Modal open={isOpen} onBackdropClick={() => setOpen(false)}>
+      <div>{children}</div>
+    </Modal>
   );
 }
