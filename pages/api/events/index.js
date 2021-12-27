@@ -102,7 +102,7 @@ export default async function handler(req, res) {
           eventDateTime: dayjs(`${eventDate} ${eventTime}`)
             .tz("Europe/Berlin")
             .utc()
-            .format(),
+            .format("YYYY-MM-DDTHH:mm:ssZ[Z]"),
           eventLocation: location,
           similarLink,
           duration,
