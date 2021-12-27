@@ -88,12 +88,11 @@ export default async function handler(req, res) {
 
         const imageUrl = image !== null ? image[0].url : null;
 
-        const eventDateTime = new Date(
-          dayjs(`${eventDate} ${eventTime}`)
-            .tz("Europe/Berlin")
-            .utc()
-            .format("YYYY-MM-DDTHH:MM:ss")
-        );
+        const formattedTime = `${dayjs(`${eventDate} ${eventTime}`).format(
+          "MMM D, YYYY HH:mm"
+        )} GMT+0100`;
+
+        const eventDateTime = new Date(formattedTime);
 
         const newEevent = await Event.create({
           tallyEventId: req.body.eventId,
