@@ -8,7 +8,7 @@ import Image from "next/image";
 import AddToCalendarHOC from "react-add-to-calendar-hoc";
 import dayjs from "dayjs";
 
-const AddToCalendarDropdown = AddToCalendarHOC(CustomBottom, CustomModal);
+const AddToCalendarDropdown = AddToCalendarHOC(CustomButton, CustomModal);
 
 var utc = require("dayjs/plugin/utc");
 dayjs.extend(utc);
@@ -22,20 +22,36 @@ dayjs.extend(isToday);
 export default function EventCard({ data, setModalOpen }) {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const matches = useMediaQuery("(min-width:992px)");
+
   const prepareCalendarEvent = () => {
-    const startDatetime = dayjs(data.eventDateTime)
+    const startDatetime = dayjs(data?.eventDateTime)
       .utc()
       .format("YYYYMMDDTHHmmssZ");
 
-    const duration = data.duration;
+    const endDatetime =
+      data?.duration === "30 min"
+        ? dayjs(data?.eventDateTime)
+            .add(30, "minute")
+            .utc()
+            .format("YYYYMMDDTHHmmssZ")
+        : dayjs(data?.eventDateTime)
+            .add(1, "hour")
+            .utc()
+            .format("YYYYMMDDTHHmmssZ");
+
+    const duration = data?.duration;
     return {
-      description: data.eventDescription,
+      description: data?.eventDescription,
       duration,
-      ...(data.eventMode !== "Online" ? { location: data.eventLocation } : {}),
+      ...(data?.eventMode !== "Online"
+        ? { location: data?.eventLocation }
+        : {}),
       startDatetime,
-      title: data.eventTitle,
+      endDatetime,
+      title: data?.eventTitle,
     };
   };
+
   return (
     <Grid sx={{ width: "100%", my: 3 }} item xs={12}>
       <Grid container alignItems={"center"}>
@@ -133,9 +149,9 @@ export default function EventCard({ data, setModalOpen }) {
                     background: "yellow",
                   },
                 },
-                title:
-                  data.eventDateTime &&
-                  dayjs(data.eventDateTime).format("hh mm A"),
+                title: data.eventDateTime
+                  ? dayjs(data.eventDateTime).format("hh:mm A")
+                  : "-",
               }}
               dropdownProps={{
                 anchorEl,
@@ -150,7 +166,7 @@ export default function EventCard({ data, setModalOpen }) {
   );
 }
 
-function CustomBottom(props) {
+function CustomButton(props) {
   return <Button {...props}>{props.title}</Button>;
 }
 

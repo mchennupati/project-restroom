@@ -18,7 +18,7 @@ import Image from "next/image";
 import AddToCalendarHOC from "react-add-to-calendar-hoc";
 import dayjs from "dayjs";
 
-const AddToCalendarDropdown = AddToCalendarHOC(CustomBottom, CustomModal);
+const AddToCalendarDropdown = AddToCalendarHOC(CustomButton, CustomModal);
 
 var utc = require("dayjs/plugin/utc");
 dayjs.extend(utc);
@@ -40,6 +40,17 @@ function EventDetailsModal({ modalState, setModalState }) {
       .utc()
       .format("YYYYMMDDTHHmmssZ");
 
+    const endDatetime =
+      modalState.data?.duration === "30 min"
+        ? dayjs(modalState.data?.eventDateTime)
+            .add(30, "minute")
+            .utc()
+            .format("YYYYMMDDTHHmmssZ")
+        : dayjs(modalState.data?.eventDateTime)
+            .add(1, "hour")
+            .utc()
+            .format("YYYYMMDDTHHmmssZ");
+
     const duration = modalState.data?.duration;
     return {
       description: modalState.data?.eventDescription,
@@ -48,6 +59,7 @@ function EventDetailsModal({ modalState, setModalState }) {
         ? { location: modalState.data?.eventLocation }
         : {}),
       startDatetime,
+      endDatetime,
       title: modalState.data?.eventTitle,
     };
   };
@@ -112,7 +124,9 @@ function EventDetailsModal({ modalState, setModalState }) {
                 Date & Time:
               </Typography>
               <Typography variant="body2">
-                {modalState.data?.eventDateTime}
+                {dayjs(modalState.data?.eventDateTime).format(
+                  "MMM D, YYYY h:mm A"
+                )}
               </Typography>
             </div>
 
@@ -220,7 +234,7 @@ function CustomModal({ children, anchorEl }) {
   );
 }
 
-function CustomBottom(props) {
+function CustomButton(props) {
   return <Button {...props}>I&apos;m Interested</Button>;
 }
 
