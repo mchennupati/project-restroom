@@ -2,7 +2,7 @@ import * as React from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { Button, Typography, Card, Modal, Menu, MenuItem } from "@mui/material";
+import { Button, Typography, Card, Menu, MenuItem } from "@mui/material";
 
 import Image from "next/image";
 import AddToCalendarHOC from "react-add-to-calendar-hoc";
@@ -46,53 +46,57 @@ export default function EventCard({ data, setModalOpen }) {
             }}
             sx={{ display: "flex", p: 3, width: "100%", cursor: "pointer" }}
           >
-            <div
-              style={{
-                width: "25%",
-                position: "relative",
-                height: 150,
-              }}
-            >
-              <Image
-                src={
-                  data.imageUrl
-                    ? data.imageUrl
-                    : require("../assets/placeholder.png")
-                }
-                alt="Event Picture"
-                objectFit="cover"
-                layout="fill"
-              />
-            </div>
-            <Box
-              sx={{
-                display: "flex",
-                flexDirection: "column",
-                width: "75%",
-                ml: 3,
-              }}
-            >
-              {/* <CardContent sx={{ flex: "1 0 auto" }}> */}
-              <Typography
-                sx={{ fontWeight: "700" }}
-                component="div"
-                variant="h6"
-              >
-                {`${data.eventTitle} - ${data.duration}`}
-              </Typography>
-              <Typography
-                gutterBottom
-                variant="subtitle1"
-                color="text.secondary"
-                component="div"
-              >
-                {"by " + data.adminName}
-              </Typography>
-              <Typography variant="body2" component="div">
-                {data.eventDescription}
-              </Typography>
-              {/* </CardContent> */}
-            </Box>
+            <Grid container spacing={!matches && 2}>
+              <Grid item xs={12} md={3}>
+                <div
+                  style={{
+                    position: "relative",
+                    height: matches ? 150 : 200,
+                  }}
+                >
+                  <Image
+                    src={
+                      data.imageUrl
+                        ? data.imageUrl
+                        : require("../assets/placeholder.png")
+                    }
+                    alt="Event Picture"
+                    objectFit="cover"
+                    layout="fill"
+                  />
+                </div>
+              </Grid>
+              <Grid item xs={12} md={9}>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    ml: matches && 3,
+                  }}
+                >
+                  {/* <CardContent sx={{ flex: "1 0 auto" }}> */}
+                  <Typography
+                    sx={{ fontWeight: "700" }}
+                    component="div"
+                    variant="h6"
+                  >
+                    {`${data.eventTitle} - ${data.duration}`}
+                  </Typography>
+                  <Typography
+                    gutterBottom
+                    variant="subtitle1"
+                    color="text.secondary"
+                    component="div"
+                  >
+                    {"by " + data.adminName}
+                  </Typography>
+                  <Typography variant="body2" component="div">
+                    {data.eventDescription}
+                  </Typography>
+                  {/* </CardContent> */}
+                </Box>
+              </Grid>
+            </Grid>
           </Card>
         </Grid>
         <Grid

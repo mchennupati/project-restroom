@@ -12,13 +12,11 @@ import {
   Typography,
   useMediaQuery,
 } from "@mui/material";
-import { Modal } from "@mui/material";
 import { useTheme } from "@mui/system";
-import { Close, DateRange } from "@mui/icons-material";
+import { Close } from "@mui/icons-material";
 import Image from "next/image";
 import AddToCalendarHOC from "react-add-to-calendar-hoc";
 import dayjs from "dayjs";
-import { set } from "mongoose";
 
 const AddToCalendarDropdown = AddToCalendarHOC(CustomBottom, CustomModal);
 
