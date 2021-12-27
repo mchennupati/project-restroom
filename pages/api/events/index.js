@@ -1,5 +1,11 @@
+import dayjs from "dayjs";
+var utc = require("dayjs/plugin/utc");
+var timezone = require("dayjs/plugin/timezone");
 import dbConnect from "../../../lib/dbConnect";
 import Event from "../../../models/Event";
+
+dayjs.extend(utc);
+dayjs.extend(timezone);
 
 export default async function handler(req, res) {
   const { method } = req;
@@ -10,7 +16,7 @@ export default async function handler(req, res) {
     case "GET":
       try {
         const events = await Event.find(
-          null,
+          { eventDateTime: { $gte: dayjs().tz("Europe/Berlin") } },
           "eventTitle eventDescription userDescription imageUrl adminName adminEmail eventMode eventDateTime eventLocation similarLink duration onlineLink"
         );
         res.status(200).json({ success: true, data: events });
@@ -93,7 +99,7 @@ export default async function handler(req, res) {
           adminName,
           adminEmail,
           eventMode,
-          eventDateTime: eventDate + " " + eventTime,
+          eventDateTime: dayjs(`${eventDate} ${eventTime}`).tz("Europe/Berlin"),
           eventLocation: location,
           similarLink,
           duration,

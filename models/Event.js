@@ -13,7 +13,7 @@ const EventSchema = new mongoose.Schema(
     adminEmail: { type: String, index: true },
     interests: [String],
     eventMode: String,
-    eventDateTime: String,
+    eventDateTime: Date,
     eventLocation: String,
     similarLink: String,
     duration: String,
