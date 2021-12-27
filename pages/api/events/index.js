@@ -86,7 +86,7 @@ export default async function handler(req, res) {
           (i) => i.key === "question_wvr6vg"
         )?.value;
 
-        const imageUrl = image !== null ? image[0].name : null;
+        const imageUrl = image !== null ? image[0].url : null;
 
         const newEevent = await Event.create({
           tallyEventId: req.body.eventId,
@@ -101,7 +101,8 @@ export default async function handler(req, res) {
           eventMode,
           eventDateTime: dayjs(`${eventDate} ${eventTime}`)
             .tz("Europe/Berlin")
-            .utc(),
+            .utc()
+            .format(),
           eventLocation: location,
           similarLink,
           duration,
