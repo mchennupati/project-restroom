@@ -4,20 +4,29 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
-import { Grid, IconButton, Typography, useMediaQuery } from "@mui/material";
+import {
+  Grid,
+  IconButton,
+  Menu,
+  MenuItem,
+  Typography,
+  useMediaQuery,
+} from "@mui/material";
 import { Modal } from "@mui/material";
 import { useTheme } from "@mui/system";
 import { Close, DateRange } from "@mui/icons-material";
 import Image from "next/image";
 import AddToCalendarHOC from "react-add-to-calendar-hoc";
 import dayjs from "dayjs";
+import { set } from "mongoose";
 
-const AddToCalendarDropdown = AddToCalendarHOC(Button, CustomModal);
+const AddToCalendarDropdown = AddToCalendarHOC(CustomBottom, CustomModal);
 
 var utc = require("dayjs/plugin/utc");
 dayjs.extend(utc);
 
 function EventDetailsModal({ modalState, setModalState }) {
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const theme = useTheme();
   const matches = useMediaQuery("(min-width:992px)");
   const findOnlineLink = (link) => {
@@ -37,7 +46,9 @@ function EventDetailsModal({ modalState, setModalState }) {
     return {
       description: modalState.data?.eventDescription,
       duration,
-      location: modalState.data?.eventLocation,
+      ...(modalState.data?.eventMode !== "Online"
+        ? { location: modalState.data?.eventLocation }
+        : {}),
       startDatetime,
       title: modalState.data?.eventTitle,
     };
@@ -47,8 +58,6 @@ function EventDetailsModal({ modalState, setModalState }) {
     setModalState({ open: false, data: null });
   };
   const fullScreen = useMediaQuery(theme.breakpoints.down("md"));
-
-  const descriptionElementRef = React.useRef(null);
 
   return (
     <Dialog
@@ -164,23 +173,57 @@ function EventDetailsModal({ modalState, setModalState }) {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <AddToCalendarDropdown
-          event={prepareCalendarEvent()}
-          linkProps={{ className: "linkStyles" }}
-          buttonText="I'm Interested"
-        />
+        <div
+          onClick={(event) => {
+            setAnchorEl(event.currentTarget);
+          }}
+        >
+          <AddToCalendarDropdown
+            dropdownProps={{
+              anchorEl,
+            }}
+            event={prepareCalendarEvent()}
+            linkProps={{ className: "linkStyles" }}
+          />
+        </div>
       </DialogActions>
     </Dialog>
   );
 }
 
-function CustomModal({ children }) {
+function CustomModal({ children, anchorEl }) {
   const [isOpen, setOpen] = React.useState(true);
+
+  const handleClose = () => {
+    setOpen(!isOpen);
+  };
   return (
-    <Modal open={isOpen} onBackdropClick={() => setOpen(false)}>
-      <div>{children}</div>
-    </Modal>
+    <Menu
+      id="demo-positioned-menu"
+      aria-labelledby="demo-positioned-button"
+      anchorEl={anchorEl}
+      open={isOpen}
+      onClose={handleClose}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "left",
+      }}
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "left",
+      }}
+    >
+      {children.map((item, index) => (
+        <MenuItem key={index} onClick={handleClose}>
+          {item}
+        </MenuItem>
+      ))}
+    </Menu>
   );
+}
+
+function CustomBottom(props) {
+  return <Button {...props}>I&apos;m Interested</Button>;
 }
 
 export default EventDetailsModal;

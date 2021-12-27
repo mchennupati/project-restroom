@@ -2,13 +2,13 @@ import * as React from "react";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
-import { Button, Typography, Card, Modal } from "@mui/material";
+import { Button, Typography, Card, Modal, Menu, MenuItem } from "@mui/material";
 
 import Image from "next/image";
 import AddToCalendarHOC from "react-add-to-calendar-hoc";
 import dayjs from "dayjs";
 
-const AddToCalendarDropdown = AddToCalendarHOC(Button, CustomModal);
+const AddToCalendarDropdown = AddToCalendarHOC(CustomBottom, CustomModal);
 
 var utc = require("dayjs/plugin/utc");
 dayjs.extend(utc);
@@ -20,6 +20,7 @@ dayjs.extend(isTomorrow);
 dayjs.extend(isToday);
 
 export default function EventCard({ data, setModalOpen }) {
+  const [anchorEl, setAnchorEl] = React.useState(null);
   const matches = useMediaQuery("(min-width:992px)");
   const prepareCalendarEvent = () => {
     const startDatetime = dayjs(data.eventDateTime)
@@ -30,7 +31,7 @@ export default function EventCard({ data, setModalOpen }) {
     return {
       description: data.eventDescription,
       duration,
-      location: data.eventLocation,
+      ...(data.eventMode !== "Online" ? { location: data.eventLocation } : {}),
       startDatetime,
       title: data.eventTitle,
     };
@@ -114,53 +115,68 @@ export default function EventCard({ data, setModalOpen }) {
               ? "Tomorrow"
               : dayjs(data.eventDateTime).format("DD MMM YYYY")}
           </Typography>
-          {/* <Button
-            sx={{
-              background: "yellow",
-              border: "1px solid #000",
-              borderRadius: 1,
-              padding: "2px 8px",
-              ml: !matches && 1,
-              ":hover": {
-                background: "yellow",
-              },
-            }}
-          >
-            <Typography style={{ color: "#000" }} variant="subtitle1">
-              {dayjs(data.eventDateTime).format("hh mm A")}
-            </Typography>
-          </Button> */}
-          <AddToCalendarDropdown
-            buttonProps={{
-              sx: {
-                background: "yellow",
-                border: "1px solid #000",
-                borderRadius: 1,
-                padding: "2px 8px",
-                color: "#000",
-                ml: !matches && 1,
-                ":hover": {
+          <div onClick={(event) => setAnchorEl(event.currentTarget)}>
+            <AddToCalendarDropdown
+              buttonProps={{
+                sx: {
                   background: "yellow",
+                  border: "1px solid #000",
+                  borderRadius: 1,
+                  padding: "2px 8px",
+                  color: "#000",
+                  ml: !matches && 1,
+                  ":hover": {
+                    background: "yellow",
+                  },
                 },
-              },
-            }}
-            event={prepareCalendarEvent()}
-            linkProps={{ className: "linkStyles" }}
-            buttonText={
-              data.eventDateTime && dayjs(data.eventDateTime).format("hh mm A")
-            }
-          />
+                title:
+                  data.eventDateTime &&
+                  dayjs(data.eventDateTime).format("hh mm A"),
+              }}
+              dropdownProps={{
+                anchorEl,
+              }}
+              event={prepareCalendarEvent()}
+              linkProps={{ className: "linkStyles" }}
+            />
+          </div>
         </Grid>
       </Grid>
     </Grid>
   );
 }
 
-function CustomModal({ children }) {
+function CustomBottom(props) {
+  return <Button {...props}>{props.title}</Button>;
+}
+
+function CustomModal({ children, anchorEl }) {
   const [isOpen, setOpen] = React.useState(true);
+
+  const handleClose = () => {
+    setOpen(!isOpen);
+  };
   return (
-    <Modal open={isOpen} onBackdropClick={() => setOpen(false)}>
-      <div>{children}</div>
-    </Modal>
+    <Menu
+      id="demo-positioned-menu"
+      aria-labelledby="demo-positioned-button"
+      anchorEl={anchorEl}
+      open={isOpen}
+      onClose={handleClose}
+      anchorOrigin={{
+        vertical: "top",
+        horizontal: "left",
+      }}
+      transformOrigin={{
+        vertical: "top",
+        horizontal: "left",
+      }}
+    >
+      {children.map((item, index) => (
+        <MenuItem key={index} onClick={handleClose}>
+          {item}
+        </MenuItem>
+      ))}
+    </Menu>
   );
 }
