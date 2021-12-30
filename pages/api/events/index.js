@@ -18,7 +18,7 @@ export default async function handler(req, res) {
         const events = await Event.find(
           { eventDateTime: { $gte: dayjs().tz("Europe/Berlin") } },
           "eventTitle eventDescription userDescription imageUrl adminName adminEmail eventMode eventDateTime eventLocation similarLink duration onlineLink"
-        );
+        ).sort({ eventDateTime: 1 });
         res.status(200).json({ success: true, data: events });
       } catch (error) {
         res.status(400).json({ success: false });
