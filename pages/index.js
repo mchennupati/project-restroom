@@ -73,7 +73,8 @@ export default function index({ data }) {
                   sx={{
                     textTransform: "none",
                     height: 40,
-
+                    fontFamily: "'Public Sans', sans-serif",
+                    fontWeight: "700",
                     background: "rgb(96,221,208)",
                     color: "#000",
                     ":hover": {

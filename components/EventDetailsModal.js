@@ -79,7 +79,10 @@ function EventDetailsModal({ modalState, setModalState }) {
       maxWidth="md"
       scroll="paper"
     >
-      <DialogTitle id="scroll-dialog-title">
+      <DialogTitle
+        sx={{ fontFamily: "'Public Sans', sans-serif", fontWeight: "700" }}
+        id="scroll-dialog-title"
+      >
         <div
           style={{
             width: "100%",
@@ -149,6 +152,14 @@ function EventDetailsModal({ modalState, setModalState }) {
             </Typography>
             {modalState.data?.eventMode === "Online" ? (
               <a
+                style={{
+                  color: "#0645AD",
+                  fontFamily: "'Public Sans', sans-serif",
+                  fontWeight: "600",
+                  fontSize: 18,
+                  letterSpacing: 0.5,
+                }}
+                className="link"
                 href={findOnlineLink(modalState.data?.onlineLink)}
                 rel="noreferrer"
                 target="_blank"

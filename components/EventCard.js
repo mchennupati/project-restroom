@@ -52,6 +52,14 @@ export default function EventCard({ data, setModalOpen }) {
     };
   };
 
+  const findEventAbbr = (str) => {
+    return str
+      .match(/(?:\s|^)(\S)/g)
+      .join("")
+      .replace(/\s/g, "")
+      .substring(0, 3);
+  };
+
   return (
     <Grid sx={{ width: "100%", my: 3 }} item xs={12}>
       <Grid container alignItems={"center"}>
@@ -68,18 +76,24 @@ export default function EventCard({ data, setModalOpen }) {
                   style={{
                     position: "relative",
                     height: matches ? 150 : 200,
+                    background: !data.imageUrl && "#c5e1a5",
+                    display: !data.imageUrl && "flex",
+                    justifyContent: !data.imageUrl && "center",
+                    alignItems: !data.imageUrl && "center",
                   }}
                 >
-                  <Image
-                    src={
-                      data.imageUrl
-                        ? data.imageUrl
-                        : require("../assets/placeholder.png")
-                    }
-                    alt="Event Picture"
-                    objectFit="cover"
-                    layout="fill"
-                  />
+                  {data.imageUrl ? (
+                    <Image
+                      src={data.imageUrl}
+                      alt="Event Picture"
+                      objectFit="cover"
+                      layout="fill"
+                    />
+                  ) : (
+                    <Typography variant="h3">
+                      {findEventAbbr(data.eventTitle)}
+                    </Typography>
+                  )}
                 </div>
               </Grid>
               <Grid item xs={12} md={9}>

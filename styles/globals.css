@@ -39,3 +39,7 @@ a {
   text-align: center;
   padding: 6px;
 }
+
+.link:hover {
+  text-decoration: underline;
+}
