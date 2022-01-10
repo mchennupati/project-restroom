@@ -51,7 +51,7 @@ function EventDetailsModal({ modalState, setModalState }) {
             .utc()
             .format("YYYYMMDDTHHmmssZ");
 
-    const duration = modalState.data?.duration;
+    const duration = modalState.data?.duration === "1 hour" ? 1 : 0.5;
     return {
       description: modalState.data?.eventDescription,
       duration,
@@ -204,6 +204,7 @@ function EventDetailsModal({ modalState, setModalState }) {
           <AddToCalendarDropdown
             dropdownProps={{
               anchorEl,
+              handleClose,
             }}
             event={prepareCalendarEvent()}
             linkProps={{ className: "linkStyles" }}
@@ -214,10 +215,10 @@ function EventDetailsModal({ modalState, setModalState }) {
   );
 }
 
-function CustomModal({ children, anchorEl }) {
+function CustomModal({ children, anchorEl, handleClose }) {
   const [isOpen, setOpen] = React.useState(true);
 
-  const handleClose = () => {
+  const handleMenuClose = () => {
     setOpen(!isOpen);
   };
   return (
@@ -226,7 +227,7 @@ function CustomModal({ children, anchorEl }) {
       aria-labelledby="demo-positioned-button"
       anchorEl={anchorEl}
       open={isOpen}
-      onClose={handleClose}
+      onClose={handleMenuClose}
       anchorOrigin={{
         vertical: "top",
         horizontal: "left",
@@ -237,7 +238,13 @@ function CustomModal({ children, anchorEl }) {
       }}
     >
       {children.map((item, index) => (
-        <MenuItem key={index} onClick={handleClose}>
+        <MenuItem
+          key={index}
+          onClick={() => {
+            handleMenuClose();
+            handleClose();
+          }}
+        >
           {item}
         </MenuItem>
       ))}
