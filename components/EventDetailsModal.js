@@ -1,22 +1,24 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-import DialogActions from "@mui/material/DialogActions";
-import DialogContent from "@mui/material/DialogContent";
-import DialogTitle from "@mui/material/DialogTitle";
+
 import {
-  Grid,
-  IconButton,
   Menu,
   MenuItem,
+  Tooltip,
   Typography,
   useMediaQuery,
 } from "@mui/material";
 import { useTheme } from "@mui/system";
-import { Close } from "@mui/icons-material";
 import Image from "next/image";
 import AddToCalendarHOC from "react-add-to-calendar-hoc";
 import dayjs from "dayjs";
+
+var isTomorrow = require("dayjs/plugin/isTomorrow");
+var isToday = require("dayjs/plugin/isToday");
+
+dayjs.extend(isTomorrow);
+dayjs.extend(isToday);
 
 const AddToCalendarDropdown = AddToCalendarHOC(CustomButton, CustomModal);
 
@@ -71,7 +73,15 @@ function EventDetailsModal({ modalState, setModalState }) {
 
   return (
     <Dialog
-      PaperProps={{ style: { overflowY: "visible" } }}
+      PaperProps={{
+        sx: {
+          overflowY: "visible",
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          p: 3,
+        },
+      }}
       fullScreen={fullScreen}
       fullWidth
       open={modalState.open}
@@ -79,138 +89,85 @@ function EventDetailsModal({ modalState, setModalState }) {
       maxWidth="md"
       scroll="paper"
     >
-      <DialogTitle
-        sx={{ fontFamily: "'Public Sans', sans-serif", fontWeight: "700" }}
-        id="scroll-dialog-title"
-      >
-        <div
-          style={{
-            width: "100%",
-            justifyContent: "space-between",
-            display: "flex",
-          }}
-        >
-          {modalState.data?.eventTitle + " - " + modalState.data?.duration}
-          <IconButton onClick={handleClose}>
-            <Close />
-          </IconButton>
-        </div>
-      </DialogTitle>
-
-      <DialogContent dividers>
-        <div style={{ position: "relative", width: "100%", height: 400 }}>
-          <Image
-            layout="fill"
-            objectFit="cover"
-            alt="Event Picture"
-            src={
-              modalState.data?.imageUrl
-                ? modalState.data?.imageUrl
-                : require("../assets/placeholder.png")
-            }
-          />
-        </div>
-        <Typography sx={{ my: 2 }} variant="body1">
-          {modalState.data?.eventDescription}
+      <Typography variant="h4" style={{ fontWeight: "700" }} gutterBottom>
+        {modalState.data?.eventTitle + " - " + modalState.data?.duration}
+      </Typography>
+      <div style={{ display: "flex" }}>
+        <Typography variant="h5" style={{ fontWeight: "700" }} gutterBottom>
+          {dayjs(modalState.data?.eventDateTime).isToday()
+            ? "Today"
+            : dayjs(modalState.data?.eventDateTime).isTomorrow()
+            ? "Tomorrow"
+            : dayjs(modalState.data?.eventDateTime).format("DD MMM YYYY")}{" "}
+          by
         </Typography>
-        <Grid container>
-          <Grid item xs={6} md={4}>
-            <Typography sx={{ fontWeight: "400", mb: 1 }} variant="h6">
-              Details
-            </Typography>
-            <div>
-              <Typography
-                gutterBottom
-                variant="body2"
-                sx={{ fontWeight: "500" }}
-              >
-                Date & Time:
-              </Typography>
-              <Typography variant="body2">
-                {dayjs(modalState.data?.eventDateTime).format(
-                  "MMM D, YYYY h:mm A"
-                )}
-              </Typography>
-            </div>
-
-            <div style={{ marginTop: 10 }}>
-              <Typography
-                gutterBottom
-                variant="body2"
-                sx={{ fontWeight: "500" }}
-              >
-                Event Type:
-              </Typography>
-              <Typography variant="body2">
-                {modalState.data?.eventMode}
-              </Typography>
-            </div>
-          </Grid>
-          <Grid item xs={6} md={4}>
-            <Typography sx={{ fontWeight: "400", mb: 1 }} variant="h6">
-              {modalState.data?.eventMode === "Online" ? "Link" : "Venue"}
-            </Typography>
-            {modalState.data?.eventMode === "Online" ? (
-              <a
-                style={{
-                  color: "#0645AD",
-                  fontFamily: "'Public Sans', sans-serif",
-                  fontWeight: "600",
-                  fontSize: 18,
-                  letterSpacing: 0.5,
-                }}
-                className="link"
-                href={findOnlineLink(modalState.data?.onlineLink)}
-                rel="noreferrer"
-                target="_blank"
-              >
-                {modalState.data?.onlineLink}
-              </a>
-            ) : (
-              <Typography variant="body2">
-                {modalState.data?.eventLocation}
-              </Typography>
-            )}
-          </Grid>
-          <Grid sx={{ mt: matches ? 0 : 3 }} item xs={6} md={4}>
-            <Typography sx={{ fontWeight: "400", mb: 1 }} variant="h6">
-              Organizer
-            </Typography>
-
-            <Typography variant="body2">
-              {modalState.data?.adminName}
-            </Typography>
-            <div style={{ marginTop: 10 }}>
-              <Typography
-                gutterBottom
-                variant="body2"
-                sx={{ fontWeight: "500" }}
-              >
-                Email:
-              </Typography>
-              <Typography variant="body2">
-                {modalState.data?.adminEmail}
-              </Typography>
-            </div>
-          </Grid>
-        </Grid>
-      </DialogContent>
-      <DialogActions>
-        <div
-          onClick={(event) => {
-            setAnchorEl(event.currentTarget);
+        &nbsp;
+        <Tooltip title={modalState.data?.userDescription}>
+          <Typography variant="h5" style={{ fontWeight: "700" }} gutterBottom>
+            {modalState.data?.adminName}
+          </Typography>
+        </Tooltip>
+      </div>
+      <AddToCalendarDropdown
+        dropdownProps={{
+          anchorEl,
+          handleClose,
+        }}
+        event={prepareCalendarEvent()}
+        linkProps={{ className: "linkStyles" }}
+      />
+      {modalState.data?.eventMode === "Online" ? (
+        <a
+          style={{
+            color: "#000",
+            fontFamily: "'Public Sans', sans-serif",
+            fontWeight: "500",
+            fontSize: 19,
+            letterSpacing: 0.5,
+          }}
+          className="link"
+          href={findOnlineLink(modalState.data?.onlineLink)}
+          rel="noreferrer"
+          target="_blank"
+        >
+          {modalState.data?.onlineLink}
+        </a>
+      ) : (
+        <Typography
+          sx={{
+            color: "#000",
+            fontFamily: "'Public Sans', sans-serif",
+            fontWeight: "500",
+            fontSize: 19,
+            letterSpacing: 0.5,
+            mb: 2,
           }}
         >
-          <AddToCalendarDropdown
-            dropdownProps={{
-              anchorEl,
-              handleClose,
-            }}
-            event={prepareCalendarEvent()}
-            linkProps={{ className: "linkStyles" }}
-          />
-        </div>
-      </DialogActions>
+          {modalState.data?.eventLocation}
+        </Typography>
+      )}
+      <div
+        style={{
+          position: "relative",
+          width: "50%",
+          height: 200,
+          margin: "10px 0",
+        }}
+      >
+        <Image
+          layout="fill"
+          objectFit="cover"
+          alt="Event Picture"
+          src={
+            modalState.data?.imageUrl
+              ? modalState.data?.imageUrl
+              : require("../assets/placeholder.png")
+          }
+        />
+      </div>
+      <Typography sx={{ my: 2, fontWeight: "400" }} variant="h6">
+        {modalState.data?.eventDescription}
+      </Typography>
     </Dialog>
   );
 }
@@ -253,7 +210,26 @@ function CustomModal({ children, anchorEl, handleClose }) {
 }
 
 function CustomButton(props) {
-  return <Button {...props}>I&apos;m Interested</Button>;
+  return (
+    <Button
+      sx={{
+        background: "#31D3C3",
+        color: "#000",
+        width: 250,
+        padding: "0px 0",
+        fontFamily: "'Public Sans', sans-serif",
+        fontWeight: "600",
+        letterSpacing: 1,
+        textTransform: "none",
+        fontSize: 19,
+        my: 2,
+        ":hover": { background: "#31d3c3" },
+      }}
+      {...props}
+    >
+      Join!
+    </Button>
+  );
 }
 
 export default EventDetailsModal;

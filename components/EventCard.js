@@ -90,7 +90,10 @@ export default function EventCard({ data, setModalOpen }) {
                       layout="fill"
                     />
                   ) : (
-                    <Typography variant="h3">
+                    <Typography
+                      sx={{ textTransform: "uppercase" }}
+                      variant="h3"
+                    >
                       {findEventAbbr(data.eventTitle)}
                     </Typography>
                   )}
