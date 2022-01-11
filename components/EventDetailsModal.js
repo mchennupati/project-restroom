@@ -108,14 +108,20 @@ function EventDetailsModal({ modalState, setModalState }) {
           </Typography>
         </Tooltip>
       </div>
-      <AddToCalendarDropdown
-        dropdownProps={{
-          anchorEl,
-          handleClose,
+      <div
+        onClick={(event) => {
+          setAnchorEl(event.currentTarget);
         }}
-        event={prepareCalendarEvent()}
-        linkProps={{ className: "linkStyles" }}
-      />
+      >
+        <AddToCalendarDropdown
+          dropdownProps={{
+            anchorEl,
+            handleClose,
+          }}
+          event={prepareCalendarEvent()}
+          linkProps={{ className: "linkStyles" }}
+        />
+      </div>
       {modalState.data?.eventMode === "Online" ? (
         <a
           style={{
@@ -186,12 +192,12 @@ function CustomModal({ children, anchorEl, handleClose }) {
       open={isOpen}
       onClose={handleMenuClose}
       anchorOrigin={{
-        vertical: "top",
-        horizontal: "left",
+        vertical: "bottom",
+        horizontal: "center",
       }}
       transformOrigin={{
         vertical: "top",
-        horizontal: "left",
+        horizontal: "center",
       }}
     >
       {children.map((item, index) => (
