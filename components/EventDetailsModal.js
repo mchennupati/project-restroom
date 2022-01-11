@@ -1,18 +1,20 @@
 import * as React from "react";
 import Button from "@mui/material/Button";
 import Dialog from "@mui/material/Dialog";
-
 import {
   Menu,
+  IconButton,
   MenuItem,
   Tooltip,
   Typography,
   useMediaQuery,
+  Hidden,
 } from "@mui/material";
 import { useTheme } from "@mui/system";
 import Image from "next/image";
 import AddToCalendarHOC from "react-add-to-calendar-hoc";
 import dayjs from "dayjs";
+import { Close } from "@mui/icons-material";
 
 var isTomorrow = require("dayjs/plugin/isTomorrow");
 var isToday = require("dayjs/plugin/isToday");
@@ -80,6 +82,7 @@ function EventDetailsModal({ modalState, setModalState }) {
           justifyContent: "center",
           alignItems: "center",
           p: 3,
+          position: "relative",
         },
       }}
       fullScreen={fullScreen}
@@ -92,6 +95,16 @@ function EventDetailsModal({ modalState, setModalState }) {
       <Typography variant="h4" style={{ fontWeight: "700" }} gutterBottom>
         {modalState.data?.eventTitle + " - " + modalState.data?.duration}
       </Typography>
+      <Hidden mdUp>
+        <IconButton
+          onClick={() => {
+            setModalState({ open: false, data: null });
+          }}
+          sx={{ position: "absolute", top: 10, right: 10 }}
+        >
+          <Close />
+        </IconButton>
+      </Hidden>
       <div style={{ display: "flex" }}>
         <Typography variant="h5" style={{ fontWeight: "700" }} gutterBottom>
           {dayjs(modalState.data?.eventDateTime).isToday()
