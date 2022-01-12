@@ -34,7 +34,7 @@ export default function AppHeader({ sx, homePage = false }) {
         </div>
       </Link>
       {homePage && (
-        <a href="#tally-open=31Nxgw&tally-width=500&tally-emoji-animation=none">
+        <a href="#tally-open=wbAlo3&tally-width=500&tally-emoji-animation=none">
           <Button
             sx={{
               color: "#fff",
