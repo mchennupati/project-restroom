@@ -22,7 +22,7 @@ export default function index({ data }) {
     <div>
       <Script async src="https://tally.so/widgets/embed.js" />
       <Head>
-        <title>Events around you</title>
+        <title>Paid for Clean Toilets </title>
       </Head>
       <div>
         <Container>
@@ -67,7 +67,7 @@ export default function index({ data }) {
               xs={12}
               md={3}
             >
-              <a href="#tally-open=31Nxgw&tally-width=500&tally-emoji-animation=none">
+              <a href="#tally-open=wbAlo3&tally-width=500&tally-emoji-animation=none">
                 <Button
                   variant="contained"
                   sx={{
@@ -83,7 +83,7 @@ export default function index({ data }) {
                   }}
                   disableElevation
                 >
-                  Create an event...
+                  List your Clean Toilet !!
                 </Button>
               </a>
             </Grid>
