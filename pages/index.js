@@ -87,12 +87,19 @@ export default function index({ data }) {
                 </Button>
               </a>
             </Grid>
-          </Grid>
-          <Grid container justifyContent={"center"}>
-            {data.data.map((item, index) => (
+          </Grid><br/>
+          <Grid container justifyContent={"center"}>  
+            
+            <h1> The Toilets go here ... </h1>
+            
+
+            {/* {data.data.map((item, index) => (
               <EventCard setModalOpen={setModalOpen} data={item} key={index} />
-            ))}
+            ))} */}
           </Grid>
+            <h4>Toilet 1 </h4>
+            
+            <h4>Toilet 2 </h4>
         </Container>
         <EventDetailsModal
           modalState={modalOpen}
